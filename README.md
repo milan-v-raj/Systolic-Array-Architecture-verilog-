@@ -11,38 +11,12 @@ Modern neural networks rely heavily on matrix multiplication, but direct impleme
 
 Based on synthesis for a Xilinx Artix-7 FPGA (xc7a35tcpg236-1):
 
-| Metric | Naive Hardware (O(N^3)) | PyTorch (CPU) | **Custom Systolic Array** |
-| --- | --- | --- | --- |
-| **Complexity** | <br>O(N^3) 
-
- | N/A | <br>**O(N)** 
-
- |
-| **Latency** | ~170 µs 
-
- | ~161 µs 
-
- | <br>**6.2 µs** 
-
- |
-| **Max Frequency** | 193 MHz 
-
- | N/A | <br>**310 MHz** 
-
- |
-| **Power** | ~0.073 W 
-
- | ~80 W (Est.) 
-
- | <br>**0.073 W** 
-
- |
-| **Efficiency** | Low | ~0.005 GOPS/W 
-
- | <br>**145 GOPS/W** 
-
- |
-
+Metric,Naive Hardware (O(N3)),PyTorch (CPU),Custom Systolic Array
+Complexity,O(N3) ,N/A,O(N) 
+Latency,~170 µs ,~161 µs ,6.2 µs 
+Max Frequency,193 MHz ,N/A,310 MHz 
+Power,~0.073 W ,~80 W (Est.) ,0.073 W 
+Efficiency,Low,~0.005 GOPS/W ,145 GOPS/W 
 ---
 
 ##  Architecture
