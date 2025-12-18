@@ -110,32 +110,44 @@ This number comes from our controller's logic, which we know from the
 simulation. For a 32x32 matrix (which is a 4x4 grid of 8x8 blocks): 
 
 • Total Block Operations: 4×4×4=64 block operations. 
+
 • Cycles per Block: our FSM takes about 30 cycles per block (for fetches, 
 core reset, execution, and accumulation). 
+
 • Total Cycles: 64 blocks * 30 cycles/block = 1,920 cycles. 
+
 To note : the 30 cycles comes from the following – fetch_a(1) , fetch_b(1), 
 reset_systolic(1),execute (23 cycles), read_c(1), write_c(1), update_pointers(1) 
 Now we plug these numbers into the formula: 
 • Execution Time = 1,920 cycles / 310,000,000 cycles/second ≈ 0.00000619 
 seconds. 
+
 • that's 6.19 microseconds (µs). 
+
 The Power report shows a Total On-Chip Power of 0.073 W (or 73 milliwatts). 
 This is an exceptionally low number. A CPU running the same task might consume 
 80W, and a GPU could be 150-300W. 
+
 The Utilization report shows our entire accelerator uses only 1% of the FPGA's 
 logic (LUTs and FFs). This means our design is incredibly compact and efficient. 
 There is more to this!! 
+
 Formula: Throughput = Total Operations / Execution Time 
 Total Operations: For a 32x32 matrix, it's 2 * 32 * 32 * 32 = 65,536 operations. 
+
 Execution Time: We previously calculated this from our report. 
+
 • Max Frequency (f_max): 310 MHz 
+
 • Total Clock Cycles: 1,920 cycles 
+
 • Time = 1,920 / 310,000,000 = 6.2 µs (microseconds) 
+
 Throughput Calculation: 
 • 65,536 ops / 0.0000062 s ≈ 10,570,000,000 ops/sec ≈ 10.6 GOPS 
-36 | Page 
- 
+
 Efficiency = throughput / power = 10.6 GOPS/0.073 = 145 GOPS/Watt !!!!!! 
+
 * 
 **Logic Usage:** Uses only **1\%** of the FPGA's logic (LUTs and FFs).
 
