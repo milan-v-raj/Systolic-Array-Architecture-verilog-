@@ -89,99 +89,47 @@ Vivado Results  **
 
 # Project Analysis: Systolic Array Matrix Multiplication
 
-This section details the performance and efficiency metrics for the Systolic Array accelerator, based on Vivado synthesis and implementation results.
-
----
-
-##  Performance Calculation
-
-The final execution time is determined by the total clock cycles required for the operation divided by the maximum achievable clock frequency.
-
-### 1. Maximum Frequency (f_{max})
-
-* 
-**Target Clock Period:** 10\text{ ns} (100\text{ MHz}).
-
-
-* 
-**Worst Negative Slack (WNS):** +6.773\text{ ns}.
-
-
-* 
-**Actual Minimum Period:** \text{Target Period} - \text{WNS} = 10\text{ ns} - 6.773\text{ ns} = 3.227\text{ ns}.
-
-
-* 
-**Maximum Frequency (f_{max}):** 1 / 3.227\text{ ns} \approx \mathbf{310\text{ MHz}}.
-
-
-
-### 2. Total Clock Cycles (32x32 Matrix)
-
-For a 32 \times 32 matrix (comprising a 4 \times 4 grid of 8 \times 8 blocks), the cycle breakdown is as follows:
-
-* 
-**Total Block Operations:** 4 \times 4 \times 4 = 64 block operations.
-
-
-* 
-**Cycles per Block:** \approx 30\text{ cycles}.
-
-
-* 
-*Breakdown:* `fetch_a` (1), `fetch_b` (1), `reset_systolic` (1), `execute` (23), `read_c` (1), `write_c` (1), `update_pointers` (1).
-
-
-
-
-* 
-**Total Cycles:** 64\text{ blocks} \times 30\text{ cycles/block} = \mathbf{1,920\text{ cycles}}.
-
-
-
-### 3. Execution Time
-
-* 
-**Formula:** 1,920\text{ cycles} / 310,000,000\text{ cycles/second} \approx 0.00000619\text{ seconds}.
-
-
-* 
-**Result:** **6.19\text{ microseconds (\textmu s)}**.
-
-
-
----
-
-##  Throughput and Efficiency
-
-### Throughput
-
-* 
-**Total Operations:** 2 \times 32 \times 32 \times 32 = 65,536\text{ operations}.
-
-
-* 
-**Calculation:** 65,536\text{ ops} / 0.0000062\text{ s} \approx \mathbf{10.6\text{ GOPS}}.
-
-
-
-### Power and Efficiency
-
-* 
-**Total On-Chip Power:** **0.073\text{ W}** (73\text{ mW}).
-
-
-* 
-**Power Efficiency:** 10.6\text{ GOPS} / 0.073\text{ W} = \mathbf{145\text{ GOPS/Watt}}.
-
-
-
----
-
-##  Resource Utilization
-
-The implementation on the Artix-7 FPGA is highly optimized:
-
+The final execution time is calculated with this formula:  
+Execution Time = Total Clock Cycles / Actual Maximum Clock Frequency 
+ 
+Our target clock period was 10 ns (for a 100 MHz clock). 
+The report shows a Worst Negative Slack (WNS) of +6.773 ns. 
+A positive slack means our design is faster than the target. It finished its longest 
+calculation 6.773 ns before the 10 ns deadline. 
+Actual Minimum Period = (Target Period) - WNS = 10 ns - 6.773 ns = 3.227 ns. 
+(fastest clock period our design can realistically support) 
+Maximum Frequency (f_max) = 1 / 3.227 ns ≈ 310 MHz.  
+ 
+ 
+This number comes from your controller's logic, which we know from the 
+simulation. For a 32x32 matrix (which is a 4x4 grid of 8x8 blocks): 
+• Total Block Operations: 4×4×4=64 block operations. 
+• Cycles per Block: Your FSM takes about 30 cycles per block (for fetches, 
+core reset, execution, and accumulation). 
+• Total Cycles: 64 blocks * 30 cycles/block = 1,920 cycles. 
+To note : the 30 cycles comes from the following – fetch_a(1) , fetch_b(1), 
+reset_systolic(1),execute (23 cycles), read_c(1), write_c(1), update_pointers(1) 
+Now we plug these numbers into the formula: 
+• Execution Time = 1,920 cycles / 310,000,000 cycles/second ≈ 0.00000619 
+seconds. 
+• that's 6.19 microseconds (µs). 
+The Power report shows a Total On-Chip Power of 0.073 W (or 73 milliwatts). 
+This is an exceptionally low number. A CPU running the same task might consume 
+80W, and a GPU could be 150-300W. 
+The Utilization report shows our entire accelerator uses only 1% of the FPGA's 
+logic (LUTs and FFs). This means our design is incredibly compact and efficient. 
+There is more to this!! 
+Formula: Throughput = Total Operations / Execution Time 
+Total Operations: For a 32x32 matrix, it's 2 * 32 * 32 * 32 = 65,536 operations. 
+Execution Time: We previously calculated this from our report. 
+• Max Frequency (f_max): 310 MHz 
+• Total Clock Cycles: 1,920 cycles 
+• Time = 1,920 / 310,000,000 = 6.2 µs (microseconds) 
+Throughput Calculation: 
+• 65,536 ops / 0.0000062 s ≈ 10,570,000,000 ops/sec ≈ 10.6 GOPS 
+36 | Page 
+ 
+Efficiency = throughput / power = 10.6 GOPS/0.073 = 145 GOPS/Watt !!!!!! 
 * 
 **Logic Usage:** Uses only **1\%** of the FPGA's logic (LUTs and FFs).
 
