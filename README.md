@@ -26,23 +26,14 @@ To overcome physical FPGA resource limits, the project implements **Tiling (Bloc
 
 ##  Project Structure
 
-* 
 `pe.v`: Verilog implementation of a single MAC Processing Element.
 
-
-* 
 `systolic_array_8x8.v`: The 8\times8 core compute grid.
 
-
-* 
 `matmul_controller.v`: The "brain" of the engine, managing loop counters and memory addresses for tiling.
 
-
-* 
 `tiled_matmul_engine.v`: The top-level body that orchestrates data flow between memories and the systolic core.
 
-
-* 
 `tb_tiled_matmul.v`: Testbench for verifying tiled multiplication results against PyTorch.
 
 
