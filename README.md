@@ -93,18 +93,24 @@ The final execution time is calculated with this formula:
 Execution Time = Total Clock Cycles / Actual Maximum Clock Frequency 
  
 Our target clock period was 10 ns (for a 100 MHz clock). 
+
 The report shows a Worst Negative Slack (WNS) of +6.773 ns. 
+
 A positive slack means our design is faster than the target. It finished its longest 
 calculation 6.773 ns before the 10 ns deadline. 
+
 Actual Minimum Period = (Target Period) - WNS = 10 ns - 6.773 ns = 3.227 ns. 
+
 (fastest clock period our design can realistically support) 
 Maximum Frequency (f_max) = 1 / 3.227 ns ≈ 310 MHz.  
+
  
  
-This number comes from your controller's logic, which we know from the 
+This number comes from our controller's logic, which we know from the 
 simulation. For a 32x32 matrix (which is a 4x4 grid of 8x8 blocks): 
+
 • Total Block Operations: 4×4×4=64 block operations. 
-• Cycles per Block: Your FSM takes about 30 cycles per block (for fetches, 
+• Cycles per Block: our FSM takes about 30 cycles per block (for fetches, 
 core reset, execution, and accumulation). 
 • Total Cycles: 64 blocks * 30 cycles/block = 1,920 cycles. 
 To note : the 30 cycles comes from the following – fetch_a(1) , fetch_b(1), 
